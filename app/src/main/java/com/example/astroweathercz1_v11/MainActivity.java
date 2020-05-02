@@ -119,23 +119,37 @@ public class MainActivity extends AppCompatActivity implements Options.IOptionsL
     public void onConfirmOptions(String sLongitude, String sLatitude, String delayTime) {
         astronomy = calculateNewInformationsForSunAndMoon(Double.valueOf(sLongitude), Double.valueOf(sLatitude));
         delayInMS = Long.parseLong(delayTime.replaceAll(" ", "")) * 1000 * 60;
-        confirmOptionClicked = true;
         longtitude = Double.valueOf(sLongitude);
         latitude = Double.valueOf(sLatitude);
 
         // ustaw długość i szerokośc geograficzną
         tvActualLocalization.setText(String.format("Latitude %s Longtitude %s", latitude, longtitude));
 
-        if (isTablet(getApplicationContext())) {
-            // dodaj tylko fragment result
-            viewPagerFragmentAdapter.addFragment(Result.newInstance(longtitude, latitude));
-            viewPagerFragmentAdapter.notifyDataSetChanged();
+        if(!confirmOptionClicked) {
+            if (isTablet(getApplicationContext())) {
+                // dodaj tylko fragment result
+                viewPagerFragmentAdapter.addFragment(Result.newInstance(longtitude, latitude));
+                viewPagerFragmentAdapter.notifyDataSetChanged();
+            } else {
+                // dodaj fragment moon i sun
+                viewPagerFragmentAdapter.addFragment(Moon.newInstance(longtitude, latitude));
+                viewPagerFragmentAdapter.addFragment(Sun.newInstance(longtitude, latitude));
+                viewPagerFragmentAdapter.notifyDataSetChanged();
+            }
         } else {
-            // dodaj fragment moon i sun
-            viewPagerFragmentAdapter.addFragment(Moon.newInstance(longtitude, latitude));
-            viewPagerFragmentAdapter.addFragment(Sun.newInstance(longtitude, latitude));
-            viewPagerFragmentAdapter.notifyDataSetChanged();
+            if (isTablet(getApplicationContext())) {
+                // podmien result fragment
+                viewPagerFragmentAdapter.replaceFragment(Result.newInstance(longtitude, latitude), 1);
+                viewPagerFragmentAdapter.notifyDataSetChanged();
+            } else {
+                // podmien moon i sun fragment
+                viewPagerFragmentAdapter.replaceFragment(Moon.newInstance(longtitude, latitude), 1);
+                viewPagerFragmentAdapter.replaceFragment(Sun.newInstance(longtitude, latitude), 2);
+                viewPagerFragmentAdapter.notifyDataSetChanged();
+            }
         }
+
+        confirmOptionClicked = true;
     }
 
     private void setActualTime() {

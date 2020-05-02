@@ -26,6 +26,11 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
         return arrayList.get(position);
     }
 
+    public void replaceFragment(Fragment fragment, int arrayPosition) {
+        arrayList.remove(arrayPosition);
+        arrayList.add(arrayPosition, fragment);
+    }
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {
