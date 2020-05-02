@@ -57,9 +57,9 @@ public class Astronomy implements Serializable {
         arrayList.add("Wschód słońca: " + sunRise);
         arrayList.add("Azymut: "+ azimuthRise);
         arrayList.add("Zachód słońca: " + sunSet);
-        arrayList.add("Azymut" + azimuthSet);
+        arrayList.add("Azymut: " + azimuthSet);
         arrayList.add("Civil morning twilight: " +  twilightMorning);
-        arrayList.add("Civil evening twilight" + twilightEvening);
+        arrayList.add("Civil evening twilight: " + twilightEvening);
 
         return arrayList;
     }
@@ -126,33 +126,14 @@ public class Astronomy implements Serializable {
         arrayList.add("Najbliższy nów: " + nextNewMoon);
         arrayList.add("Najbliższa pełnia: " + fullMoon);
         arrayList.add("Faza księżyca: " + moonIllumination);
-        //TODO: jak obliczyc kolejny nów?
-        // wrzucenie daty z wyliczonym kolejnym nowiem i ponowne wywołanie nextNewMoon() nic nie daje
-        // więc obliczam ile dni minęło od najnowszego nowiu
+
         arrayList.add("Dzień miesiąca synodycznego: " + synodicMonthDay);
 
         return arrayList;
     }
 
-    //TODO: fajnie było by policzyć to tutaj, ale wciąż 0 dni.
-    private long synodicMonthDayCalculator(String nextNewMoon/*, int yearNextMoon, int monthNextMoon, int dayNextMoon*/) {
-//        Dzień miesiąca synodycznego.???????
-//        Miesiąc synodyczny[1], lunacja[2] – średni czas pomiędzy kolejnymi nowiami[a] Księżyca
-//        średnia czas, _____CZAS_____
-//        lalaa...
+    private long synodicMonthDayCalculator(String nextNewMoon) {
 
-//        https://www.tutorialspoint.com/how-to-parse-date-from-string-in-the-format-dd-mm-yyyy-to-dd-mm-yyyy-in-java
-//        String oldYear = String.valueOf(astroDateTime.getYear());
-//        String oldMonth = String.valueOf(astroDateTime.getMonth());
-//        String oldDay = String.valueOf(astroDateTime.getDay());
-//        String oldStringDate = oldYear + "-" + oldMonth + "-" + oldDay;
-        // ale czy ten czas to hehe nów?
-        // zgarnij ostatni koljeny nów
-//        String oldNewMoon = nextNewMoon;
-        // dla starego nowiu policz jego kolejny
-//        astroDateTime.setYear(yearNextMoon);
-//        astroDateTime.setMonth(monthNextMoon);
-//        astroDateTime.setDay(dayNextMoon);
         AstroCalculator.MoonInfo moonAstroInfo;
         moonAstroInfo = astroCalculator.getMoonInfo();
         int yearNewNextMoon = moonAstroInfo.getNextNewMoon().getYear();
